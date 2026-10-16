@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NALLRC — Mobile App Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --pupred: #800;
+  --pupred2: #800840;
+  --blue: #1B5299;
+  --sky: #2A7FC1;
+  --gold: #E8A020;
+  --gold2: #F5B736;
+  --gold-lt: #FDF3E0;
+  --white: #FFFFFF;
+  --off: #F5F8FC;
+  --mist: #E8F2FB;
+  --light: #C8DFEF;
+  --gray: #7A8FA0;
+  --dark: #060F18;
+  --green: #15824A;
+  --green-lt: #E3F5EC;
+  --red: #C0392B;
+  --red-lt: #FEF0EE;
+  --purple: #6C3FC7;
+}
+
+html,body {
+  font-family: 'Inter', sans-serif;
+  background: #0B1420;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px 60px;
+}
+
+/* ── PAGE CHROME ── */
+.page-bg {
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(27,82,153,0.25) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(232,160,32,0.08) 0%, transparent 50%),
+              #0B1420;
+  z-index: 0;
+}
+
+.layout {
+  position: relative; z-index: 1;
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* ── PHONE FRAME ── */
+.phone-wrap {
+  flex-shrink: 0;
+  position: relative;
+}
+.phone-frame {
+  width: 375px;
+  min-height: 812px;
+  background: #0B1D2E;
+  border-radius: 48px;
+  border: 2px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 8px #0d1f30,
+    0 0 0 9px rgba(255,255,255,0.06),
+    0 40px 80px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Status bar */
+.status-bar {
+  background: var(--pupred);
+  height: 44px;
+  padding: 14px 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+.status-time { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: #fff; }
+.status-icons { display: flex; gap: 6px; align-items: center; }
+.status-icons svg { width: 16px; height: 16px; fill: #fff; }
+
+/* Notch */
+.notch {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 30px;
+  background: #0B1D2E;
+  border-radius: 0 0 20px 20px;
+  z-index: 20;
+}
+
+/* Screen container */
+.screens {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  min-height: 768px;
+}
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(30px);
+  transition: opacity .35s ease, transform .35s ease;
+  scrollbar-width: none;
+}
+.screen::-webkit-scrollbar { display: none; }
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+.screen.exit-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  pointer-events: none;
+}
+
+/* ── SCREEN 1: WELCOME ── */
+#screen-welcome {
+  background: var(--pupred);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  min-height: 768px;
+}
+.welcome-logo-ring {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: var(--pupred);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 28px;
+  box-shadow: 0 0 0 6px white, 0 0 0 24px rgba(232,160,32,0.05);
+}
+.welcome-logo-ring span {
+  font-family: 'Syne', sans-serif;
+  font-size: 60px;
+  font-weight: 800;
+  color: #ffde31;
+  line-height: 0px;
+}
+.welcome-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.welcome-title em { color: var(--gold); font-style: normal; }
+.welcome-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 52px;
+  font-weight: 300;
+}
+.welcome-features {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.wf-item {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.wf-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.wf-text strong { display: block; font-size: 13.5px; font-weight: 600; color: var(--white); }
+.wf-text span { font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 300; }
+.btn-gold {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--pupred);
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+  letter-spacing: 0.3px;
+}
+.btn-gold:active { transform: scale(0.97); }
+.btn-gold:hover { background: var(--gold2); }
+.btn-ghost {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all .2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); }
+
+/* ── SCREEN 2: LOGIN ── */
+#screen-login {
+  background: var(--pupred);
+  padding: 0 0 32px;
+  min-height: 768px;
+}
+.login-header {
+  padding: 20px 24px 28px;
+}
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.5); font-size: 13px;
+  cursor: pointer; background: none; border: none;
+  padding: 8px 0; margin-bottom: 24px;
+  transition: color .18s;
+}
+.back-btn:hover { color: rgba(255,255,255,0.85); }
+.back-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.login-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.login-sub { font-size: 13.5px; color: rgba(255,255,255,0.45); font-weight: 300; line-height: 1.6; }
+
+.login-card {
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 28px 24px;
+  margin-bottom: 20px;
+}
+.form-label { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.input-wrap { position: relative; margin-bottom: 16px; }
+.input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; fill: rgba(255,255,255,0.3); pointer-events: none; }
+input[type=text], input[type=password], input[type=email] {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 13px 14px 13px 42px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  color: #fff;
+  outline: none;
+  transition: border-color .18s, background .18s;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+  border-color: var(--sky);
+  background: rgba(42,127,193,0.08);
+}
+input::placeholder { color: rgba(255,255,255,0.25); font-size: 13.5px; }
+
+.remember-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 4px;
+}
+.remember-label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.custom-check {
+  width: 18px; height: 18px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 5px;
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all .18s;
+  flex-shrink: 0;
+}
+.custom-check.checked { background: var(--sky); border-color: var(--sky); }
+.custom-check.checked::after { content:''; width:5px; height:9px; border:2px solid #fff; border-left:none; border-top:none; transform:rotate(45deg) translate(-1px,-1px); display:block; }
+.remember-text { font-size: 12.5px; color: rgba(255,255,255,0.45); }
+.forgot-link { font-size: 12.5px; color: var(--sky); cursor: pointer; }
+
+.login-padding { padding: 0 24px; }
+.student-hint {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(232,160,32,0.07);
+  border: 1px solid rgba(232,160,32,0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+.hint-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.hint-text { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; font-weight: 300; }
+.hint-text strong { color: var(--gold); font-weight: 500; }
+
+/* ── SCREEN 3: VERIFYING ── */
+#screen-verifying {
+  background: var(--pupred);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 768px;
+  padding: 40px 32px;
+}
+.verify-ring {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.06);
+  border-top-color: var(--sky);
+  animation: spin 1s linear infinite;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 32px;
+}
+.verify-ring-inner {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  background: rgba(27,82,153,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.verify-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; text-align: center; }
+.verify-sub { font-size: 13px; color: rgba(255,255,255,0.4); text-align: center; font-weight: 300; line-height: 1.7; }
+.verify-steps { width: 100%; margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
+.vstep {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  transition: background .3s;
+}
+.vstep.done { background: rgba(21,130,74,0.12); }
+.vstep.active { background: rgba(42,127,193,0.12); }
+.vstep-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+  transition: background .3s;
+}
+.vstep.done .vstep-dot { background: var(--green); }
+.vstep.active .vstep-dot { background: var(--sky); animation: pulse-dot 1s infinite; }
+@keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(42,127,193,0.4);} 50%{box-shadow:0 0 0 6px rgba(42,127,193,0);} }
+.vstep-label { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 400; }
+.vstep.done .vstep-label { color: var(--green); }
+.vstep.active .vstep-label { color: rgba(255,255,255,0.85); }
+
+/* ── SCREEN 4: QR PASS ── */
+#screen-qr {
+  background: var(--pupred);
+  padding: 0;
+  min-height: 768px;
+}
+.qr-topbar {
+  padding: 16px 24px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.qr-topbar-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: #fff; }
+.qr-topbar-sub { font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+.three-dot { display: flex; gap: 3px; cursor: pointer; padding: 6px; }
+.three-dot span { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.4); display: block; }
+
+.pass-card {
+  margin: 0 16px 20px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.pass-header {
+  background: var(--pupred2);
+  padding: 20px 22px 18px;
+  display: flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.pass-avatar {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  background: var(--sky);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.pass-name { font-family: 'Syne', sans-serif; font-size: 15.5px; font-weight: 700; color: #fff; }
+.pass-course { font-size: 11.5px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.pass-badge {
+  margin-left: auto;
+  background: rgba(21,130,74,0.2);
+  border: 1px solid rgba(21,130,74,0.4);
+  color: #5EE0A0;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.pass-qr-area {
+  background: #fff;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.qr-offline-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #EFF8F2;
+  border: 1px solid #B4DEC8;
+  color: #1A6B3C;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  letter-spacing: 0.4px;
+}
+.qr-offline-tag::before { content:''; width:6px; height:6px; border-radius:50%; background:#15824A; }
+
+#qr-canvas-wrap {
+  width: 200px; height: 200px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px;
+  border: 2px solid #E8EFF5;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  margin-bottom: 14px;
+}
+#qr-canvas-wrap img, #qr-canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.qr-corner {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--pupred);
+  border-style: solid;
+}
+.qr-corner.tl { top: -1px; left: -1px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+.qr-corner.tr { top: -1px; right: -1px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+.qr-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+.qr-corner.br { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+
+.qr-id-label { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--pupred); letter-spacing: 1.5px; }
+.qr-exp { font-size: 11px; color: var(--gray); margin-top: 3px; }
+
+.pass-info-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid #EEF3F8;
+}
+.pass-info-cell {
+  padding: 14px 10px;
+  text-align: center;
+  border-right: 1px solid #EEF3F8;
+}
+.pass-info-cell:last-child { border-right: none; }
+.pic-label { font-size: 10px; color: var(--gray); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.pic-val { font-size: 13px; font-weight: 600; color: var(--pupred); }
+
+.pass-barcode {
+  background: #F8FAFC;
+  border-top: 1px solid #EEF3F8;
+  padding: 14px 22px;
+  display: flex; align-items: center; justify-content: center;
+}
+.barcode-lines {
+  display: flex; gap: 2px; align-items: center; height: 32px;
+}
+.barcode-lines span {
+  display: block;
+  height: 100%;
+  background: #1a2a3a;
+  border-radius: 1px;
+}
+
+/* Action row below pass */
+.pass-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+.action-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+}
+.action-btn.primary { background: var(--blue); color: #fff; }
+.action-btn.primary:hover { background: #154a8a; }
+.action-btn.secondary { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.1); }
+.action-btn.secondary:hover { background: rgba(255,255,255,0.1); }
+.action-btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+/* Offline notice */
+.offline-notice {
+  margin: 0 16px 20px;
+  background: rgba(232,160,32,0.07);
+  border: 1px solid rgba(232,160,32,0.2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex; gap: 12px;
+}
+.on-icon { font-size: 20px; flex-shrink: 0; }
+.on-text {}
+.on-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 3px; }
+.on-desc { font-size: 11.5px; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+
+/* Bottom nav */
+.bottom-nav {
+  position: sticky; bottom: 0;
+  background: rgba(11,29,46,0.96);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 8px 0 16px;
+  display: flex;
+  backdrop-filter: blur(10px);
+  z-index: 50;
+}
+.bnav-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  cursor: pointer;
+  padding: 6px 0;
+  border: none; background: none;
+  transition: opacity .2s;
+}
+.bnav-icon {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+}
+.bnav-icon svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.3); transition: fill .2s; }
+.bnav-item.active .bnav-icon svg { fill: var(--gold); }
+.bnav-label { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.3); transition: color .2s; }
+.bnav-item.active .bnav-label { color: var(--gold); }
+
+/* ── SCREEN 5: HOME DASHBOARD ── */
+#screen-home {
+  background: var(--pupred);
+  min-height: 768px;
+}
+.home-header {
+  background: var(--pupred2);
+  padding: 16px 22px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.home-greeting { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 300; margin-bottom: 2px; }
+.home-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: #fff; }
+.home-meta { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+
+.occ-widget {
+  margin: 16px 16px 0;
+  background: linear-gradient(135deg, #0a3d22, #15824A 80%);
+  border-radius: 18px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.occ-widget::after {
+  content: '';
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.occ-w-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px; }
+.occ-w-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+.occ-w-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: #fff; line-height: 1; }
+.occ-w-total { font-size: 14px; color: rgba(255,255,255,0.55); }
+.occ-w-bar-track { height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; margin-bottom: 12px; }
+.occ-w-bar-fill { height: 100%; width: 62%; background: rgba(255,255,255,0.8); border-radius: 3px; }
+.occ-w-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.occ-chip {
+  background: rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+.occ-chip.warn { background: rgba(232,160,32,0.25); color: #F5D080; }
+.occ-chip.full { background: rgba(192,57,43,0.3); color: #F09090; }
+
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 20px 10px;
+}
+.section-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+.section-link { font-size: 12px; color: var(--sky); cursor: pointer; }
+
+.quick-actions {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+  padding: 0 16px;
+  margin-bottom: 8px;
+}
+.qa-item {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  cursor: pointer;
+}
+.qa-icon {
+  width: 52px; height: 52px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  transition: transform .2s;
+}
+.qa-icon:active { transform: scale(0.92); }
+.qa-label { font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,0.55); text-align: center; line-height: 1.3; }
+
+.recent-visits { padding: 0 16px; }
+.visit-card {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.visit-date-block {
+  background: var(--blue);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: center;
+  min-width: 46px;
+  flex-shrink: 0;
+}
+.vd-day { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; line-height: 1; }
+.vd-mon { font-size: 10px; color: rgba(255,255,255,0.6); font-weight: 500; }
+.visit-info { flex: 1; }
+.vi-time { font-size: 13.5px; font-weight: 600; color: #fff; }
+.vi-purpose {
+  display: inline-block;
+  background: rgba(42,127,193,0.15);
+  border: 1px solid rgba(42,127,193,0.25);
+  color: #80BFEF;
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 8px;
+  margin-top: 3px;
+}
+.visit-duration { font-size: 11.5px; color: rgba(255,255,255,0.3); text-align: right; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: rgba(21,130,74,0.95);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 30px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+  pointer-events: none;
+  z-index: 200;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Sidebar info panel */
+.info-panel {
+  flex: 1;
+  padding-top: 20px;
+}
+.info-panel h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.info-panel > p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.flow-steps { display: flex; flex-direction: column; gap: 0; }
+.flow-step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px; top: 38px;
+  width: 2px;
+  height: calc(100% - 18px);
+  background: rgba(255,255,255,0.08);
+}
+.flow-num {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.flow-content { padding-top: 8px; padding-bottom: 12px; }
+.flow-content h4 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.flow-content p { font-size: 12.5px; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+
+.info-callout {
+  background: rgba(232,160,32,0.08);
+  border: 1px solid rgba(232,160,32,0.2);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 8px;
+}
+.info-callout h4 { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 6px; }
+.info-callout p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.7; font-weight: 300; }
+
+.screen-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-top: 24px;
+}
+.stab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.45);
+  background: transparent;
+  transition: all .2s;
+}
+.stab:hover, .stab.active { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.3); }
+.stab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+@media (max-width: 700px) {
+  .layout { flex-direction: column; align-items: center; }
+  .info-panel { display: none; }
+  body { padding: 20px 0 40px; }
+  .phone-frame { border-radius: 0; width: 100vw; }
+}
+</style>
+</head>
+<body>
+<div class="page-bg"></div>
+
+<div class="layout">
+
+  <!-- ── PHONE ── -->
+  <div class="phone-wrap">
+    <div class="phone-frame">
+      <div class="notch"></div>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <span class="status-time">9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 24 24"><path d="M1.5 8.5C5.7 4.3 11.8 3.7 16.8 6.9l-1.5 1.5C11.7 6.1 7.1 6.7 4 9.9L1.5 8.5zm2.8 2.8c2.8-2.8 7-3.4 10.4-1.8l-1.6 1.6c-2.5-.9-5.5-.3-7.4 1.7L4.3 11.3zm4.2 4.2l2.5-2.5 2.5 2.5-2.5 2.5-2.5-2.5z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+        </div>
+      </div>
+
+      <!-- Screens -->
+      <div class="screens">
+
+        <!-- SCREEN 1: WELCOME -->
+        <div class="screen active" id="screen-welcome">
+          <div class="welcome-logo-ring"><span>★</span></div>
+          <div class="welcome-title">PUP NALLRC<br>Student <em>Pass</em></div>
+          <p class="welcome-sub">Your offline-ready library access card. Verify once, use anywhere — even without Wi-Fi.</p>
+          <div class="welcome-features">
+            <div class="wf-item">
+              <div class="wf-icon" style="background:rgba(232,160,32,0.12)">📲</div>
+              <div class="wf-text">
+                <strong>Offline QR Pass</strong>
+                <span>Saved to your device, no signal needed</span>
+              </div>
+            </div>
+            <div class="wf-item">
+              <div class="wf-icon" style="background:rgba(42,127,193,0.12)">🔐</div>
+              <div class="wf-text">
+                <strong>Verify Once</strong>
+                <span>University SSO — your existing credentials</span>
+              </div>
+            </div>
+            <div class="wf-item">
+              <div class="wf-icon" style="background:rgba(21,130,74,0.12)">⚡</div>
+              <div class="wf-text">
+                <strong>Under 30 Seconds</strong>
+                <span>Scan in, pick purpose, you're in</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-gold" onclick="goTo('screen-login')">Get My Library Pass →</button>
+          <button class="btn-ghost" onclick="goTo('screen-home')">I already have a pass</button>
+        </div>
+
+        <!-- SCREEN 2: LOGIN -->
+        <div class="screen" id="screen-login">
+          <div class="login-header">
+            <button class="back-btn" onclick="goTo('screen-welcome')">
+              <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              Back
+            </button>
+            <div class="login-title">Verify Your Identity</div>
+            <div class="login-sub">Sign in with your university student portal credentials to generate your QR pass.</div>
+          </div>
+
+          <div class="login-card">
+            <label class="form-label">Student ID Number</label>
+            <div class="input-wrap">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h2v2H6zm0 4h8v2H6zm4-4h8v2h-8z"/></svg>
+              <input type="text" id="student-id" placeholder="e.g. 2021-00847-TG-0" value="2021-00847-TG-0">
+            </div>
+
+            <label class="form-label">Portal Password</label>
+            <div class="input-wrap">
+              <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+              <input type="password" id="password" placeholder="Your portal password" value="••••••••">
+            </div>
+
+            <div class="remember-row">
+              <label class="remember-label" onclick="toggleCheck()">
+                <div class="custom-check checked" id="remember-check"></div>
+                <span class="remember-text">Keep me signed in</span>
+              </label>
+              <span class="forgot-link">Forgot password?</span>
+            </div>
+          </div>
+
+          <div class="login-padding">
+            <div class="student-hint">
+              <span class="hint-icon">💡</span>
+              <div class="hint-text">Use your <strong>university portal</strong> credentials (the same ones for enrollment, grades, and LMS). Your QR code is generated from your official student record.</div>
+            </div>
+            <button class="btn-gold" onclick="startVerify()">Verify &amp; Generate My QR Pass →</button>
+          </div>
+        </div>
+
+        <!-- SCREEN 3: VERIFYING -->
+        <div class="screen" id="screen-verifying">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:600px;padding:40px 32px;">
+            <div class="verify-ring">
+              <div class="verify-ring-inner">🎓</div>
+            </div>
+            <div class="verify-title">Verifying your identity…</div>
+            <div class="verify-sub">Connecting to the university student database. This only takes a moment.</div>
+            <div class="verify-steps">
+              <div class="vstep done" id="vstep-1">
+                <div class="vstep-dot"></div>
+                <div class="vstep-label">Authenticating student credentials</div>
+              </div>
+              <div class="vstep active" id="vstep-2">
+                <div class="vstep-dot"></div>
+                <div class="vstep-label">Fetching student record…</div>
+              </div>
+              <div class="vstep" id="vstep-3">
+                <div class="vstep-dot"></div>
+                <div class="vstep-label">Generating encrypted QR token</div>
+              </div>
+              <div class="vstep" id="vstep-4">
+                <div class="vstep-dot"></div>
+                <div class="vstep-label">Saving pass to device</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN 4: QR PASS -->
+        <div class="screen" id="screen-qr">
+          <div class="qr-topbar">
+            <div>
+              <div class="qr-topbar-title">My Library Pass</div>
+              <div class="qr-topbar-sub">Works offline — saved to this device</div>
+            </div>
+            <div class="three-dot"><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="pass-card">
+            <!-- Pass header -->
+            <div class="pass-header">
+              <div class="pass-avatar">MD</div>
+              <div>
+                <div class="pass-name">Maria T. Dela Cruz</div>
+                <div class="pass-course">BS Information Technology · 3rd Year</div>
+              </div>
+              <div class="pass-badge">● ACTIVE</div>
+            </div>
+
+            <!-- QR Code area -->
+            <div class="pass-qr-area">
+              <div class="qr-offline-tag">Offline-ready pass</div>
+              <div id="qr-canvas-wrap">
+                <div class="qr-corner tl"></div>
+                <div class="qr-corner tr"></div>
+                <div class="qr-corner bl"></div>
+                <div class="qr-corner br"></div>
+                <div id="qr-output"></div>
+              </div>
+              <div class="qr-id-label">2021-00847-TG-0</div>
+              <div class="qr-exp">Valid until: Dec 31, 2025 · AY 2025–2026</div>
+            </div>
+
+            <!-- Info strip -->
+            <div class="pass-info-strip">
+              <div class="pass-info-cell">
+                <div class="pic-label">College</div>
+                <div class="pic-val" style="font-size:11.5px;">CCIS</div>
+              </div>
+              <div class="pass-info-cell">
+                <div class="pic-label">Year</div>
+                <div class="pic-val">3rd</div>
+              </div>
+              <div class="pass-info-cell">
+                <div class="pic-label">Status</div>
+                <div class="pic-val" style="color:#15824A;">Regular</div>
+              </div>
+            </div>
+
+            <!-- Barcode strip -->
+            <div class="pass-barcode">
+              <div class="barcode-lines" id="barcode-lines"></div>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="pass-actions">
+            <button class="action-btn primary" onclick="saveQR()">
+              <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>
+              Save to Gallery
+            </button>
+            <button class="action-btn secondary" onclick="showShareOptions()">
+              <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+              Share Pass
+            </button>
+          </div>
+
+          <!-- Offline notice -->
+          <div class="offline-notice">
+            <div class="on-icon">📶</div>
+            <div class="on-text">
+              <div class="on-title">No internet? No problem.</div>
+              <div class="on-desc">This QR code is saved directly on your device. The kiosk at the library does the scanning — your phone only needs to display it. Screenshot it or save it for guaranteed access.</div>
+            </div>
+          </div>
+
+          <!-- Bottom nav -->
+          <div class="bottom-nav">
+            <button class="bnav-item" onclick="goTo('screen-home'); setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>
+              <span class="bnav-label">Home</span>
+            </button>
+            <button class="bnav-item active" onclick="goTo('screen-qr'); setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M3 3h6v6H3V3zm1 1v4h4V4H4zm1 1h2v2H5V5zm10-2h6v6h-6V3zm1 1v4h4V4h-4zm1 1h2v2h-2V5zM3 15h6v6H3v-6zm1 1v4h4v-4H4zm1 1h2v2H5v-2zm8-8h1v1h-1V8zm2 0h1v1h-1V8zm2 0h1v1h-1V8zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm4 0h1v1h-1v-1zm-2 2h1v1h-1v-1z"/></svg></div>
+              <span class="bnav-label">My Pass</span>
+            </button>
+            <button class="bnav-item" onclick="goTo('screen-home'); setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+              <span class="bnav-label">Alerts</span>
+            </button>
+            <button class="bnav-item" onclick="setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+              <span class="bnav-label">Profile</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SCREEN 5: HOME DASHBOARD -->
+        <div class="screen" id="screen-home">
+          <div class="home-header">
+            <div class="home-greeting">Good morning,</div>
+            <div class="home-name">Maria 👋</div>
+            <div class="home-meta">BS Information Technology · 3rd Year · 2021-00847</div>
+          </div>
+
+          <!-- Live occupancy -->
+          <div class="occ-widget">
+            <div class="occ-w-label">📍 NALLRC — Live Now</div>
+            <div class="occ-w-row">
+              <div class="occ-w-num">187</div>
+              <div class="occ-w-total">/ 300 students</div>
+            </div>
+            <div class="occ-w-bar-track"><div class="occ-w-bar-fill"></div></div>
+            <div class="occ-w-chips">
+              <div class="occ-chip">Reading: 98/150 ✓</div>
+              <div class="occ-chip warn">PCs: 26/40</div>
+              <div class="occ-chip full">Study Rooms: Full</div>
+            </div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="section-header">
+            <div class="section-title">Quick Actions</div>
+          </div>
+          <div class="quick-actions">
+            <div class="qa-item" onclick="goTo('screen-qr'); setNavByName('My Pass')">
+              <div class="qa-icon" style="background:rgba(27,82,153,0.3)">📲</div>
+              <div class="qa-label">My QR Pass</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-icon" style="background:rgba(21,130,74,0.2)">💻</div>
+              <div class="qa-label">Book a PC</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-icon" style="background:rgba(108,63,199,0.2)">📚</div>
+              <div class="qa-label">Catalogue</div>
+            </div>
+            <div class="qa-item">
+              <div class="qa-icon" style="background:rgba(232,160,32,0.15)">📅</div>
+              <div class="qa-label">Room Book</div>
+            </div>
+          </div>
+
+          <!-- My pass shortcut -->
+          <div style="padding:12px 16px 0;">
+            <div style="background:rgba(27,82,153,0.15);border:1px solid rgba(27,82,153,0.3);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;" onclick="goTo('screen-qr')">
+              <div style="width:44px;height:44px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📲</div>
+              <div style="flex:1;">
+                <div style="font-size:13.5px;font-weight:600;color:#fff;">Your Library Pass is Ready</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:2px;">Tap to view offline QR code</div>
+              </div>
+              <svg style="width:16px;height:16px;fill:rgba(255,255,255,0.3);" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </div>
+          </div>
+
+          <!-- Recent visits -->
+          <div class="section-header" style="margin-top:8px;">
+            <div class="section-title">Recent Visits</div>
+            <div class="section-link">View all</div>
+          </div>
+          <div class="recent-visits">
+            <div class="visit-card">
+              <div class="visit-date-block"><div class="vd-day">29</div><div class="vd-mon">APR</div></div>
+              <div class="visit-info">
+                <div class="vi-time">8:52 AM – 9:58 AM</div>
+                <div class="vi-purpose">Study / Review</div>
+              </div>
+              <div class="visit-duration">1h 6m</div>
+            </div>
+            <div class="visit-card">
+              <div class="visit-date-block" style="background:#15824A;"><div class="vd-day">27</div><div class="vd-mon">APR</div></div>
+              <div class="visit-info">
+                <div class="vi-time">2:14 PM – 4:33 PM</div>
+                <div class="vi-purpose">Use Computer</div>
+              </div>
+              <div class="visit-duration">2h 19m</div>
+            </div>
+            <div class="visit-card">
+              <div class="visit-date-block" style="background:#6C3FC7;"><div class="vd-day">25</div><div class="vd-mon">APR</div></div>
+              <div class="visit-info">
+                <div class="vi-time">10:00 AM – 12:45 PM</div>
+                <div class="vi-purpose">Research</div>
+              </div>
+              <div class="visit-duration">2h 45m</div>
+            </div>
+          </div>
+
+          <!-- Bottom nav -->
+          <div class="bottom-nav">
+            <button class="bnav-item active" onclick="setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>
+              <span class="bnav-label">Home</span>
+            </button>
+            <button class="bnav-item" onclick="goTo('screen-qr'); setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M3 3h6v6H3V3zm1 1v4h4V4H4zm1 1h2v2H5V5zm10-2h6v6h-6V3zm1 1v4h4V4h-4zm1 1h2v2h-2V5zM3 15h6v6H3v-6zm1 1v4h4v-4H4zm1 1h2v2H5v-2zm8-8h1v1h-1V8zm2 0h1v1h-1V8zm2 0h1v1h-1V8zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm4 0h1v1h-1v-1zm-2 2h1v1h-1v-1z"/></svg></div>
+              <span class="bnav-label">My Pass</span>
+            </button>
+            <button class="bnav-item" onclick="setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+              <span class="bnav-label">Alerts</span>
+            </button>
+            <button class="bnav-item" onclick="setNav(this)">
+              <div class="bnav-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
+              <span class="bnav-label">Profile</span>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /screens -->
+    </div><!-- /phone-frame -->
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+  </div><!-- /phone-wrap -->
+
+  <!-- ── INFO PANEL ── -->
+  <div class="info-panel">
+    <h2>How it works</h2>
+    <p>A 4-step flow from first-time setup to daily library access — offline-capable after the first verification.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num" style="background:rgba(232,160,32,0.15);color:var(--gold);">1</div>
+        <div class="flow-content">
+          <h4>Download &amp; Verify Once</h4>
+          <p>Student opens the app or web portal and signs in using their university portal credentials. Needs internet only this one time.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num" style="background:rgba(42,127,193,0.15);color:var(--sky);">2</div>
+        <div class="flow-content">
+          <h4>QR Pass Generated &amp; Saved</h4>
+          <p>The server generates a digitally-signed, encrypted QR token tied to their student ID. It is cached locally on the device — no connection needed to display it later.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num" style="background:rgba(21,130,74,0.15);color:var(--green);">3</div>
+        <div class="flow-content">
+          <h4>Arrive, Open App, Scan</h4>
+          <p>At the library kiosk, student opens their pass (works offline), holds it up to the scanner. Kiosk validates the token server-side. Student selects purpose — done in under 30 seconds.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num" style="background:rgba(108,63,199,0.15);color:#A07FE0;">4</div>
+        <div class="flow-content">
+          <h4>Pass Refreshes Periodically</h4>
+          <p>Each semester, the QR token auto-renews when the student next connects to any network — their pass stays current without manual action.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-callout">
+      <h4>Why offline works here</h4>
+      <p>A QR code is just an encoded string — like the student's ID number wrapped in an encrypted signature. The student's phone only needs to <em>display</em> it. The kiosk scanner is the one that connects to the network to validate. No Wi-Fi required on the student's side at all.</p>
+    </div>
+
+    <div class="screen-tabs">
+      <button class="stab active" onclick="jumpTo('screen-welcome',this)">Welcome</button>
+      <button class="stab" onclick="jumpTo('screen-login',this)">Login</button>
+      <button class="stab" onclick="jumpTo('screen-verifying',this)">Verifying</button>
+      <button class="stab" onclick="jumpTo('screen-qr',this)">QR Pass</button>
+      <button class="stab" onclick="jumpTo('screen-home',this)">Dashboard</button>
+    </div>
+  </div>
+
+</div><!-- /layout -->
+
+<script>
+let current = 'screen-welcome';
+
+function goTo(id) {
+  const prev = document.getElementById(current);
+  const next = document.getElementById(id);
+  if (!next || id === current) return;
+  prev.classList.remove('active');
+  prev.classList.add('exit-left');
+  setTimeout(() => prev.classList.remove('exit-left'), 400);
+  next.classList.add('active');
+  current = id;
+  updateSideTabs();
+}
+
+function jumpTo(id, btn) {
+  goTo(id);
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function updateSideTabs() {
+  const map = { 'screen-welcome':0,'screen-login':1,'screen-verifying':2,'screen-qr':3,'screen-home':4 };
+  const tabs = document.querySelectorAll('.stab');
+  tabs.forEach((t,i) => t.classList.toggle('active', i === map[current]));
+}
+
+function setNav(btn) {
+  const nav = btn.closest('.bottom-nav');
+  nav.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function setNavByName(name) {
+  document.querySelectorAll('.bnav-item').forEach(btn => {
+    if (btn.querySelector('.bnav-label')?.textContent === name) {
+      setNav(btn);
+    }
+  });
+}
+
+function toggleCheck() {
+  document.getElementById('remember-check').classList.toggle('checked');
+}
+
+let verifyTimer;
+function startVerify() {
+  goTo('screen-verifying');
+  const steps = ['vstep-1','vstep-2','vstep-3','vstep-4'];
+  steps.forEach(id => {
+    const el = document.getElementById(id);
+    el.className = 'vstep';
+  });
+  let i = 0;
+  function advance() {
+    if (i > 0) {
+      document.getElementById(steps[i-1]).className = 'vstep done';
+      document.getElementById(steps[i-1]).querySelector('.vstep-label').textContent =
+        ['Credentials verified ✓','Student record loaded ✓','QR token encrypted ✓','Pass saved to device ✓'][i-1];
+    }
+    if (i < steps.length) {
+      document.getElementById(steps[i]).className = 'vstep active';
+      i++;
+      verifyTimer = setTimeout(advance, 900);
+    } else {
+      setTimeout(() => { goTo('screen-qr'); buildQR(); }, 700);
+    }
+  }
+  advance();
+}
+
+function buildQR() {
+  const wrap = document.getElementById('qr-output');
+  wrap.innerHTML = '';
+  try {
+    new QRCode(wrap, {
+      text: 'NALLRC|2021-00847-TG-0|MD|BSIT3|SIG-' + Date.now(),
+      width: 160, height: 160,
+      colorDark: '#0B1D2E',
+      colorLight: '#FFFFFF',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) {
+    wrap.innerHTML = '<div style="width:160px;height:160px;background:#f0f0f0;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">QR unavailable</div>';
+  }
+  buildBarcode();
+}
+
+function buildBarcode() {
+  const wrap = document.getElementById('barcode-lines');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const seed = 'NALLRC2021-00847'.split('').map(c => c.charCodeAt(0));
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('span');
+    const h = 18 + ((seed[i % seed.length] + i) % 14);
+    const w = (i % 3 === 0) ? 3 : (i % 5 === 0) ? 1 : 2;
+    s.style.cssText = `width:${w}px;height:${h}px;`;
+    wrap.appendChild(s);
+  }
+}
+
+function showToast(msg, color) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color || 'rgba(21,130,74,0.95)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function saveQR() {
+  showToast('✓  Pass saved to your gallery!');
+}
+
+function showShareOptions() {
+  showToast('Share link copied to clipboard', 'rgba(27,82,153,0.95)');
+}
+
+// Init QR if landed on that screen
+window.addEventListener('load', () => {
+  setTimeout(buildQR, 300);
+  buildBarcode();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,989 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NALLRC — Smart Visitor Log</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pupred:   #800;
+    --blue:   #1B5299;
+    --sky:    #2E86C1;
+    --gold:   #E8A020;
+    --gold-lt:#FDF3E0;
+    --white:  #FFFFFF;
+    --offwhite:#F4F8FF;
+    --mist:   #EAF3FB;
+    --light:  #D6E8FA;
+    --gray:   #8899AA;
+    --dark:   #0A1520;
+    --green:  #1A8C4E;
+    --red:    #C0392B;
+    --card-shadow: 0 4px 24px rgba(13,33,55,0.10);
+    --radius: 14px;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--offwhite);
+    color: var(--pupred);
+    min-height: 100vh;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    background: var(--pupred);
+    padding: 0 2.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .nav-logo {
+    width: 38px;
+    height: 38px;
+    background: #800;
+    border-radius: 50%;
+    border-color: white;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: #ffde31;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+    line-height: 0px;
+  }
+  .nav-title-block { display: flex; flex-direction: column; }
+  .nav-title { font-size: 15px; font-weight: 600; color: var(--white); letter-spacing: 0.3px; }
+  .nav-sub { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 300; letter-spacing: 0.4px; }
+  .nav-links { display: flex; align-items: center; gap: 6px; }
+  .nav-link { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13.5px; padding: 7px 14px; border-radius: 8px; transition: all .18s; }
+  .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+  .nav-link.active { color: var(--white); background: rgba(46,134,193,0.3); }
+  .nav-badge {
+    background: var(--sky);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-left: 6px;
+    cursor: pointer;
+    transition: background .18s;
+  }
+  .nav-badge:hover { background: #1f6fa0; }
+  .gold-bar { height: 3px; background: var(--gold); }
+
+/* ── DISCLAIMER BANNER ── */
+/* Main Container */
+.disclaimer-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #e3f2fd; /* Soft light blue */
+    border: 1px solid #bbdefb;
+    border-left: 6px solid #1976d2; /* Professional blue border */
+    border-right: 6px solid #1976d2; /* Professional blue border */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    font-family: sans-serif;
+}
+
+/* Switches to a side-by-side layout on larger screens */
+@media (min-width: 768px) {
+    .disclaimer-banner {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Left section wrapper */
+.disclaimer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    min-width: 250px;
+}
+
+
+/* Title text styling */
+.disclaimer-title {
+    font-size: 16px;
+    color: #444;
+}
+
+/* Makes the word "Disclaimer" pop in a dark blue */
+.disclaimer-title strong {
+    color: #ff2200; 
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* The long paragraph */
+.disclaimer-message {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    flex: 1; 
+}
+
+  /* ── OCCUPANCY BANNER ── */
+  .occ-banner {
+    background: var(--mist);
+    border-bottom: 1px solid var(--light);
+    padding: 10px 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .occ-left { display: flex; align-items: center; gap: 18px; }
+  .occ-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(26,140,78,0.2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(26,140,78,0.2);} 50%{box-shadow:0 0 0 7px rgba(26,140,78,0.05);} }
+  .occ-text { font-size: 13px; color: var(--pupred); }
+  .occ-text strong { color: var(--green); }
+  .occ-stats { display: flex; gap: 24px; }
+  .occ-stat { font-size: 13px; color: #5a6e80; }
+  .occ-stat span { font-weight: 600; color: var(--pupred); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--pupred);
+    padding: 4rem 2.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(46,134,193,0.08);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 20px; right: 120px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(232,160,32,0.06);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: end;
+  }
+  .hero-copy { padding-bottom: 3rem; }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,160,32,0.15);
+    border: 1px solid rgba(232,160,32,0.3);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    line-height: 1.18;
+    color: var(--white);
+    margin-bottom: 1.1rem;
+  }
+  .hero-title em { color: var(--gold); font-style: italic; }
+  .hero-desc { font-size: 15px; color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; max-width: 420px; margin-bottom: 2rem; }
+  .hero-stats { display: flex; gap: 2rem; }
+  .hstat { text-align: left; }
+  .hstat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--gold); line-height: 1; }
+  .hstat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 4px; font-weight: 300; }
+
+  .hero-card-wrap {
+    position: relative;
+    padding-bottom: 0;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-card {
+    background: var(--white);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 2rem 2rem 0;
+    width: 100%;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.25);
+  }
+  .hero-card-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1.25rem;
+  }
+  .scan-zone {
+    border: 2px dashed var(--light);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    background: var(--offwhite);
+    cursor: pointer;
+    transition: all .2s;
+    margin-bottom: 1.25rem;
+  }
+  .scan-zone:hover { border-color: var(--sky); background: var(--mist); }
+  .scan-icon {
+    width: 56px; height: 56px;
+    background: var(--pupred);
+    border-radius: 12px;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .scan-icon svg { width: 28px; height: 28px; fill: var(--gold); }
+  .scan-title { font-size: 15px; font-weight: 600; color: var(--pupred); }
+  .scan-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+  .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--light); }
+  .divider span { font-size: 12px; color: var(--gray); font-weight: 500; }
+
+  /* ── MAIN CONTENT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 3rem 2.5rem 4rem; }
+
+  /* ── LOG FORM CARD ── */
+  .log-section { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--pupred);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-header-icon {
+    width: 34px; height: 34px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-header-icon svg { width: 16px; height: 16px; fill: var(--gold); }
+  .card-header-text {}
+  .card-header h3 { font-size: 14px; font-weight: 600; color: var(--white); }
+  .card-header p { font-size: 11.5px; color: rgba(255,255,255,0.5); margin-top: 1px; font-weight: 300; }
+  .card-body { padding: 1.75rem; }
+
+  /* ── FORM ── */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-size: 12px; font-weight: 500; color: var(--gray); letter-spacing: 0.3px; }
+  .field-wrap { position: relative; }
+  .field-icon {
+    position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px;
+    color: var(--gray);
+  }
+  .field-icon svg { width: 14px; height: 14px; fill: var(--gray); }
+  input[type=text], input[type=email], select {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--pupred);
+    background: var(--offwhite);
+    border: 1.5px solid var(--light);
+    border-radius: 9px;
+    outline: none;
+    transition: border-color .18s, background .18s;
+    appearance: none;
+  }
+  input[type=text]:focus, input[type=email]:focus, select:focus {
+    border-color: var(--sky);
+    background: var(--white);
+  }
+  input.prefilled {
+    background: #F0FAF5;
+    border-color: #A7DEC0;
+    color: #1A5C35;
+  }
+  .prefill-badge {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    background: #D4F0E2;
+    color: #1A6B3C;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── PURPOSE CHIPS ── */
+  .purpose-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .purpose-chip {
+    border: 1.5px solid var(--light);
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .18s;
+    background: var(--offwhite);
+  }
+  .purpose-chip:hover { border-color: var(--sky); background: var(--mist); }
+  .purpose-chip.selected {
+    border-color: var(--blue);
+    background: #EBF2FC;
+  }
+  .purpose-chip-icon { font-size: 20px; margin-bottom: 5px; }
+  .purpose-chip-label { font-size: 11px; font-weight: 500; color: var(--pupred); line-height: 1.3; }
+
+  /* ── SUBMIT BUTTON ── */
+  .btn-primary {
+    width: 100%;
+    padding: 13px;
+    background: var(--pupred);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    margin-top: 1.25rem;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary:hover { background: #154a8a; }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* ── SIDE PANEL ── */
+  .side-panel { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  /* ── OCCUPANCY CARD ── */
+  .occ-card-header { background: linear-gradient(135deg, #0d5c3e, #1a8c4e); }
+  .occ-visual { padding: 1.5rem 1.75rem; }
+  .occ-bar-wrap { margin-bottom: 1.25rem; }
+  .occ-bar-label { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 8px; }
+  .occ-bar-label span:first-child { color: var(--gray); }
+  .occ-bar-label span:last-child { font-weight: 600; color: var(--green); }
+  .occ-bar-track {
+    height: 10px;
+    background: var(--mist);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .occ-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1A8C4E, #27AE60);
+    border-radius: 5px;
+    width: 62%;
+    transition: width 1s ease;
+  }
+  .occ-rooms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .occ-room {
+    background: var(--offwhite);
+    border-radius: 9px;
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid var(--light);
+  }
+  .occ-room-label { font-size: 10px; color: var(--gray); font-weight: 500; margin-bottom: 3px; }
+  .occ-room-val { font-size: 16px; font-weight: 700; color: var(--pupred); }
+  .occ-room-val.full { color: var(--red); }
+  .occ-room-val.open { color: var(--green); }
+  .occ-room-cap { font-size: 10px; color: var(--gray); }
+
+  /* ── RECENT LOG CARD ── */
+  .log-entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--light);
+  }
+  .log-entry:last-child { border-bottom: none; }
+  .log-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--sky);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .log-info {flex: 1;}
+  .log-name { font-size: 13.5px; font-weight: 500; color: var(--pupred); }
+  .log-meta { font-size: 11.5px; color: var(--gray); margin-top: 1px; }
+  .log-time { margin-left: auto; font-size: 11.5px; color: var(--gray); flex-shrink: 0; }
+  .log-purpose-badge {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 8px;
+    background: var(--mist);
+    color: var(--blue);
+    border: 1px solid var(--light);
+    margin-left: 4px;
+    white-space: nowrap;
+  }
+
+  /* ── FEATURES SECTION ── */
+  .features-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--pupred);
+    margin-bottom: 0.4rem;
+  }
+  .features-sub { font-size: 14px; color: var(--gray); margin-bottom: 2rem; font-weight: 300; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .feature-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    border-top: 3px solid transparent;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(13,33,55,0.13); }
+  .feature-card.blue { border-top-color: var(--sky); }
+  .feature-card.gold { border-top-color: var(--gold); }
+  .feature-card.green { border-top-color: var(--green); }
+  .feature-card.purple { border-top-color: #7C5CBF; }
+  .feature-card.teal { border-top-color: #0F8080; }
+  .feature-card.red { border-top-color: var(--red); }
+  .feature-icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 22px;
+  }
+  .bg-blue { background: var(--mist); }
+  .bg-gold { background: var(--gold-lt); }
+  .bg-green { background: #E8F8EF; }
+  .bg-purple { background: #F0EBFF; }
+  .bg-teal { background: #E5F6F6; }
+  .bg-red { background: #FFF0EE; }
+  .feature-card h4 { font-size: 14.5px; font-weight: 600; color: var(--pupred); margin-bottom: 6px; }
+  .feature-card p { font-size: 13px; color: var(--gray); line-height: 1.7; font-weight: 300; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--pupred);
+    color: rgba(255,255,255,0.5);
+    padding: 2rem 2.5rem;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 3px solid var(--gold);
+  }
+  footer strong { color: var(--white); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color .15s; }
+  .footer-links a:hover { color: var(--white); }
+
+  /* ── MOBILE INDICATOR ── */
+  .qr-pending {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold-lt);
+    border: 1px solid #F5D88A;
+    border-radius: 9px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: #7A4E00;
+    margin-top: -0.25rem;
+    margin-bottom: 1rem;
+  }
+  .qr-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; animation: pulse 1.5s infinite; }
+
+  /* ── STEP INDICATOR ── */
+  .step-strip {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 1.75rem;
+    background: var(--offwhite);
+    border-radius: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--light);
+  }
+  .step { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--gray); flex: 1; }
+  .step.active { color: var(--blue); }
+  .step.done { color: var(--green); }
+  .step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--light);
+    color: var(--gray);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step.active .step-num { background: var(--blue); color: var(--white); }
+  .step.done .step-num { background: var(--green); color: var(--white); }
+  .step-arrow { color: var(--light); font-size: 12px; margin: 0 6px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero-inner, .log-section, .features-grid { grid-template-columns: 1fr; }
+    .hero-card-wrap { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .purpose-grid { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .main { padding: 2rem 1.25rem 3rem; }
+  }
+</style>
+</head>
+<body>
+<!-- Disclaimer -->
+<div class="disclaimer-banner">
+  <div class="disclaimer-left">
+    <div class="disclaimer-dot"></div>
+    <div class="disclaimer-title"><strong>Disclaimer</strong> — Educational Mockup</div>
+  </div>
+  <div class="disclaimer-message">
+    This site is a mockup created strictly for educational purposes and course project requirements. It is not intended to misrepresent, claim ownership of, or compromise the integrity of the Polytechnic University of the Philippines (PUP) logo or any official university assets.
+  </div>
+</div>
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">★</div>
+    <div class="nav-title-block">
+      <span class="nav-title">PUP NALLRC</span>
+      <span class="nav-sub">University Library System</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Visitor Log</a>
+    <a class="nav-link" href="#">Book Search</a>
+    <a class="nav-link" href="#">PC Booking</a>
+    <a class="nav-link" href="#">About</a>
+    <a class="nav-badge" href="#">Student Login</a>
+  </div>
+</nav>
+<div class="gold-bar"></div>
+
+<!-- OCCUPANCY BANNER -->
+<div class="occ-banner">
+  <div class="occ-left">
+    <div class="occ-dot"></div>
+    <div class="occ-text">Library is <strong>Open</strong> — Moderate traffic right now</div>
+  </div>
+  <div class="occ-stats">
+    <div class="occ-stat">Current Visitors: <span>187</span></div>
+    <div class="occ-stat">Capacity: <span>300</span></div>
+    <div class="occ-stat">Available PCs: <span>14 / 40</span></div>
+    <div class="occ-stat">Wait Est.: <span>&lt; 1 min</span></div>
+  </div>
+</div>
+
+
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        Smart Visitor Logging
+      </div>
+      <h1 class="hero-title">
+        Log in to the library.<br>
+        <em>In seconds, not minutes.</em>
+      </h1>
+      <p class="hero-desc">Tap your ID, scan your QR code, or use the quick form. Your information is pre-filled from the university database — just choose your purpose and you're in.</p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-num">&lt;30s</div>
+          <div class="hstat-label">Average log-in time</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">0</div>
+          <div class="hstat-label">Repeated data entry</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">24/7</div>
+          <div class="hstat-label">Web access</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card-wrap">
+      <div class="hero-card">
+        <div class="hero-card-label">Quick Access</div>
+        <div class="scan-zone" onclick="this.style.borderColor='#1B5299'; this.style.background='#EBF2FC';" style="border-color: rgb(27, 82, 153); background: rgb(235, 242, 252);">
+          <div class="scan-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 3h6v6H3V3zm1 1v4h4V4H4zm1 1h2v2H5V5zm10-2h6v6h-6V3zm1 1v4h4V4h-4zm1 1h2v2h-2V5zM3 15h6v6H3v-6zm1 1v4h4v-4H4zm1 1h2v2H5v-2zm8-8h1v1h-1V8zm2 0h1v1h-1V8zm2 0h1v1h-1V8zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm4 0h1v1h-1v-1zm-2 2h1v1h-1v-1z"></path></svg>
+          </div>
+          <div class="scan-title">Tap or Scan Your Student ID</div>
+          <div class="scan-sub">NFC tap • QR Code scan • Card swipe</div>
+        </div>
+        <div class="divider"><span>or <a href="">log in manually</a></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- LOGGING FORM + SIDE -->
+  <div class="log-section">
+
+    <!-- FORM CARD -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"></path></svg>
+        </div>
+        <div class="card-header-text">
+          <h3>Visitor Log Entry</h3>
+          <p>Your details are pre-filled from the university database</p>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <!-- Step indicator -->
+        <div class="step-strip">
+          <div class="step done">
+            <div class="step-num">✓</div>
+            Identify
+          </div>
+          <span class="step-arrow">›</span>
+          <div class="step active">
+            <div class="step-num">2</div>
+            Verify Details
+          </div>
+          <span class="step-arrow">›</span>
+          <div class="step">
+            <div class="step-num">3</div>
+            Purpose
+          </div>
+          <span class="step-arrow">›</span>
+          <div class="step">
+            <div class="step-num">4</div>
+            Log In
+          </div>
+        </div>
+
+        <!-- QR scanned notice -->
+        <div class="qr-pending">
+          <div class="qr-dot"></div>
+          Student ID scanned — please verify your information below
+        </div>
+
+        <!-- Form fields -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name</label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12z"></path></svg></span>
+              <input type="text" class="prefilled" value="Maria T. Dela Cruz" readonly="">
+              <span class="prefill-badge">Auto-filled</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Student ID Number</label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h2v2H6zm0 4h8v2H6zm4-4h8v2h-8z"></path></svg></span>
+              <input type="text" class="prefilled" value="2021-00847-TG-0" readonly="">
+              <span class="prefill-badge">Auto-filled</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg></span>
+              <input type="email" class="prefilled" value="m.delacruz@university.edu.ph" readonly="">
+              <span class="prefill-badge">Auto-filled</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Course / Program</label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18V17h2v-4.82L12 14l7-3.82V17h2v-5.82L23 9 12 3zm0 2.18L18.82 9 12 12.18 5.18 9 12 5.18z"></path></svg></span>
+              <input type="text" class="prefilled" value="BS Information Technology — 3rd Year" readonly="">
+              <span class="prefill-badge">Auto-filled</span>
+            </div>
+          </div>
+
+          <!-- Purpose of Visit -->
+          <div class="form-group full">
+            <label>Purpose of Visit <span style="color:#C0392B;margin-left:2px;">*</span></label>
+            <div class="purpose-grid">
+              <div class="purpose-chip selected" onclick="selectChip(this)">
+                <div class="purpose-chip-icon">📖</div>
+                <div class="purpose-chip-label">Study / Review</div>
+              </div>
+              <div class="purpose-chip" onclick="selectChip(this)">
+                <div class="purpose-chip-icon">💻</div>
+                <div class="purpose-chip-label">Use Computer</div>
+              </div>
+              <div class="purpose-chip" onclick="selectChip(this)">
+                <div class="purpose-chip-icon">🔍</div>
+                <div class="purpose-chip-label">Research</div>
+              </div>
+              <div class="purpose-chip" onclick="selectChip(this)">
+                <div class="purpose-chip-icon">📚</div>
+                <div class="purpose-chip-label">Borrow Books</div>
+              </div>
+              <div class="purpose-chip" onclick="selectChip(this)">
+                <div class="purpose-chip-icon">🤝</div>
+                <div class="purpose-chip-label">Group Work</div>
+              </div>
+              <div class="purpose-chip" onclick="selectChip(this)">
+                <div class="purpose-chip-icon">📋</div>
+                <div class="purpose-chip-label">Other</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="handleSubmit(this)">
+          Confirm &amp; Log In to Library →
+        </button>
+      </div>
+    </div>
+
+    <!-- SIDE PANEL -->
+    <div class="side-panel">
+
+      <!-- Occupancy Card -->
+      <div class="card">
+        <div class="card-header occ-card-header">
+          <div class="card-header-icon" style="background:rgba(255,255,255,0.15)">
+            <svg viewBox="0 0 24 24" style="fill:#90EEC4"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg>
+          </div>
+          <div>
+            <h3 style="color:var(--white); font-size:14px; font-weight:600;">Live Occupancy</h3>
+            <p style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:300; margin-top:1px;">Updated every 30 seconds</p>
+          </div>
+        </div>
+        <div class="occ-visual">
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-label">
+              <span>Current Occupancy</span>
+              <span>187 / 300 (62%)</span>
+            </div>
+            <div class="occ-bar-track"><div class="occ-bar-fill"></div></div>
+          </div>
+          <div class="occ-rooms">
+            <div class="occ-room">
+              <div class="occ-room-label">Reading Area</div>
+              <div class="occ-room-val open">98</div>
+              <div class="occ-room-cap">of 150</div>
+            </div>
+            <div class="occ-room">
+              <div class="occ-room-label">PC Section</div>
+              <div class="occ-room-val" style="color:#E67E22;">26</div>
+              <div class="occ-room-cap">of 40</div>
+            </div>
+            <div class="occ-room">
+              <div class="occ-room-label">Study Rooms</div>
+              <div class="occ-room-val full">6/6</div>
+              <div class="occ-room-cap">Full</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Visitors Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-icon">
+            <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></svg>
+          </div>
+          <div>
+            <h3>Recent Log-ins</h3>
+            <p>Last 5 entries today</p>
+          </div>
+        </div>
+        <div class="card-body" style="padding: 0.25rem 1.75rem 1.5rem;">
+          <div class="log-entry">
+            <div class="log-avatar" style="background:#1A8C4E;">JR</div>
+            <div class="log-info">
+              <div class="log-name">Juan R. Santos</div>
+              <div class="log-meta">BS Computer Engineering · 2nd Yr</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+              <span class="log-time">9:04 AM</span>
+              <span class="log-purpose-badge">Research</span>
+            </div>
+          </div>
+          <div class="log-entry">
+            <div class="log-avatar" style="background:#8E44AD;">AP</div>
+            <div class="log-info">
+              <div class="log-name">Ana P. Reyes</div>
+              <div class="log-meta">BA Communication · 4th Yr</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+              <span class="log-time">8:58 AM</span>
+              <span class="log-purpose-badge">Study</span>
+            </div>
+          </div>
+          <div class="log-entry">
+            <div class="log-avatar" style="background:#C0392B;">MG</div>
+            <div class="log-info">
+              <div class="log-name">Marco G. Lim</div>
+              <div class="log-meta">BS Accountancy · 3rd Yr</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+              <span class="log-time">8:51 AM</span>
+              <span class="log-purpose-badge">PC Use</span>
+            </div>
+          </div>
+          <div class="log-entry">
+            <div class="log-avatar" style="background:#E67E22;">RL</div>
+            <div class="log-info">
+              <div class="log-name">Rosa L. Cruz</div>
+              <div class="log-meta">BS Nursing · 2nd Yr</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+              <span class="log-time">8:47 AM</span>
+              <span class="log-purpose-badge">Borrow</span>
+            </div>
+          </div>
+          <div class="log-entry">
+            <div class="log-avatar" style="background:#0F8080;">BT</div>
+            <div class="log-info">
+              <div class="log-name">Bea T. Ocampo</div>
+              <div class="log-meta">BS Architecture · 1st Yr</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
+              <span class="log-time">8:41 AM</span>
+              <span class="log-purpose-badge">Group Work</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FEATURES SECTION -->
+  <div style="margin-top: 1rem;">
+    <p class="features-sub">Why the new system?</p>
+    <h2 class="features-title">Designed for students, not for paperwork.</h2>
+    <div class="features-grid">
+      <div class="feature-card blue">
+        <div class="feature-icon-wrap bg-blue">📲</div>
+        <h4>QR &amp; NFC ID Scanning</h4>
+        <p>Tap your student ID or scan the QR code. All your details are pulled instantly from the university database — no typing required.</p>
+      </div>
+      <div class="feature-card gold">
+        <div class="feature-icon-wrap bg-gold">⚡</div>
+        <h4>Under 30-Second Log-in</h4>
+        <p>From approach to entry in seconds. The only thing you choose is your purpose. Everything else is already filled in.</p>
+      </div>
+      <div class="feature-card green">
+        <div class="feature-icon-wrap bg-green">📊</div>
+        <h4>Live Occupancy Data</h4>
+        <p>See real-time library occupancy before you even leave your dorm. Plan your visit around peak hours to avoid waiting in line.</p>
+      </div>
+      <div class="feature-card purple">
+        <div class="feature-icon-wrap bg-purple">🔗</div>
+        <h4>University SSO Integration</h4>
+        <p>One account for everything — your existing student credentials work here. No new passwords, no new registrations.</p>
+      </div>
+      <div class="feature-card teal">
+        <div class="feature-icon-wrap bg-teal">💻</div>
+        <h4>Web &amp; Mobile Access</h4>
+        <p>Log your visit from your phone before you arrive. Available on any device through the university portal or this web page.</p>
+      </div>
+      <div class="feature-card red">
+        <div class="feature-icon-wrap bg-red">🚪</div>
+        <h4>Automated Exit Logging</h4>
+        <p>Tap your ID on exit just as you did on entry. Accurate occupancy data, every time — for your benefit and the library's.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <strong>PUP NALLRC</strong> — Ninoy Aquino Library &amp; Learning Resource Center &nbsp;·&nbsp;
+    University Integrated Services Platform &nbsp;·&nbsp; © 2025
+  </div>
+  <div class="footer-links">
+    <a href="#">Help</a>
+    <a href="#">Privacy</a>
+    <a href="#">Admin</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function selectChip(el) {
+    document.querySelectorAll('.purpose-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function handleSubmit(btn) {
+    btn.textContent = 'Logging in…';
+    btn.style.background = '#1A8C4E';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = '✓ Logged In — Welcome to NALLRC!';
+      btn.style.background = '#1A8C4E';
+      const banner = document.querySelector('.qr-pending');
+      if (banner) {
+        banner.style.background = '#E8F8EF';
+        banner.style.borderColor = '#A7DEC0';
+        banner.style.color = '#1A5C35';
+        banner.innerHTML = '<div style="width:8px;height:8px;border-radius:50%;background:#1A8C4E;flex-shrink:0;"></div> You are now logged in — enjoy your session at the NALLRC!';
+      }
+    }, 1200);
+  }
+</script>
+
+
+</body></html>
